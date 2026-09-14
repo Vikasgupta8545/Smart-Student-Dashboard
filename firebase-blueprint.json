@@ -1,0 +1,210 @@
+{
+  "entities": {
+    "Student": {
+      "title": "Student",
+      "description": "Student academic profile and biometric facial recognition data",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "rollNumber": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "department": { "type": "string" },
+        "semester": { "type": "number" },
+        "section": { "type": "string" },
+        "cgpa": { "type": "number" },
+        "sgpa": { "type": "number" },
+        "batch": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "faceRegistered": { "type": "boolean" },
+        "faceConsentGiven": { "type": "boolean" },
+        "faceRegisteredAt": { "type": "string" },
+        "address": { "type": "string" },
+        "guardianName": { "type": "string" },
+        "guardianPhone": { "type": "string" }
+      },
+      "required": ["rollNumber", "name", "department", "semester"]
+    },
+    "Subject": {
+      "title": "Subject",
+      "description": "Academic course offered in the department",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string" },
+        "name": { "type": "string" },
+        "department": { "type": "string" },
+        "semester": { "type": "number" },
+        "credits": { "type": "number" },
+        "facultyName": { "type": "string" },
+        "facultyEmail": { "type": "string", "format": "email" },
+        "roomNumber": { "type": "string" },
+        "totalClasses": { "type": "number" }
+      },
+      "required": ["code", "name", "credits"]
+    },
+    "AttendanceRecord": {
+      "title": "AttendanceRecord",
+      "description": "Attendance log for a class session marked via Face Recognition or manually",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "subjectCode": { "type": "string" },
+        "subjectName": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "sessionSlot": { "type": "string" },
+        "status": { "type": "string", "enum": ["Present", "Absent", "Late", "Excused"] },
+        "method": { "type": "string", "enum": ["face", "manual", "qr"] },
+        "verifiedBy": { "type": "string" },
+        "confidence": { "type": "number" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["studentId", "subjectId", "date", "status", "method"]
+    },
+    "TimetableSlot": {
+      "title": "TimetableSlot",
+      "description": "Weekly recurring lecture and lab slot",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "day": { "type": "string" },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "subjectCode": { "type": "string" },
+        "subjectName": { "type": "string" },
+        "facultyName": { "type": "string" },
+        "roomNumber": { "type": "string" },
+        "type": { "type": "string" },
+        "semester": { "type": "number" },
+        "section": { "type": "string" }
+      },
+      "required": ["day", "startTime", "endTime", "subjectCode"]
+    },
+    "MarkRecord": {
+      "title": "MarkRecord",
+      "description": "Continuous internal assessment marks and grades",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "subjectCode": { "type": "string" },
+        "subjectName": { "type": "string" },
+        "semester": { "type": "number" },
+        "internal1": { "type": "number" },
+        "internal2": { "type": "number" },
+        "assignmentMarks": { "type": "number" },
+        "attendanceMarks": { "type": "number" },
+        "totalInternal": { "type": "number" },
+        "grade": { "type": "string" },
+        "remarks": { "type": "string" }
+      },
+      "required": ["studentId", "subjectCode", "semester"]
+    },
+    "Assignment": {
+      "title": "Assignment",
+      "description": "Course assignments and laboratory homework",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "subjectCode": { "type": "string" },
+        "subjectName": { "type": "string" },
+        "description": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "maxMarks": { "type": "number" },
+        "semester": { "type": "number" },
+        "section": { "type": "string" },
+        "assignedDate": { "type": "string" }
+      },
+      "required": ["title", "subjectCode", "dueDate", "maxMarks"]
+    },
+    "Exam": {
+      "title": "Exam",
+      "description": "Mid-term and end-term examination schedule",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "subjectCode": { "type": "string" },
+        "subjectName": { "type": "string" },
+        "date": { "type": "string" },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" },
+        "roomNumber": { "type": "string" },
+        "totalMarks": { "type": "number" },
+        "semester": { "type": "number" }
+      },
+      "required": ["title", "subjectCode", "date", "startTime"]
+    },
+    "CampusNotification": {
+      "title": "CampusNotification",
+      "description": "Campus announcements, circulars, and notices",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "category": { "type": "string" },
+        "priority": { "type": "string" },
+        "target": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "read": { "type": "boolean" }
+      },
+      "required": ["title", "message", "category", "priority"]
+    },
+    "TestConnection": {
+      "title": "TestConnection",
+      "description": "Health check document for testing Firestore server connectivity",
+      "type": "object",
+      "properties": {
+        "status": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/students/{studentId}": {
+      "schema": "Student",
+      "description": "Collection of student academic and face biometric profiles"
+    },
+    "/subjects/{subjectId}": {
+      "schema": "Subject",
+      "description": "Collection of engineering subjects and courses"
+    },
+    "/attendance/{attendanceId}": {
+      "schema": "AttendanceRecord",
+      "description": "Attendance punch-ins from smart facial recognition kiosk"
+    },
+    "/timetable/{scheduleId}": {
+      "schema": "TimetableSlot",
+      "description": "Weekly class schedules for CSE"
+    },
+    "/marks/{markId}": {
+      "schema": "MarkRecord",
+      "description": "Internal test results and continuous assessments"
+    },
+    "/assignments/{assignmentId}": {
+      "schema": "Assignment",
+      "description": "Course assignments and submissions tracking"
+    },
+    "/exams/{examId}": {
+      "schema": "Exam",
+      "description": "Examination timetable and seating halls"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "CampusNotification",
+      "description": "Campus-wide and departmental announcements"
+    },
+    "/test/{testId}": {
+      "schema": "TestConnection",
+      "description": "Firestore server connection health check"
+    }
+  }
+}
