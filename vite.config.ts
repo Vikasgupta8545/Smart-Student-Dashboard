@@ -65,6 +65,7 @@ function apiDevPlugin() {
 export default defineConfig(() => {
   return {
     plugins: [react(), tailwindcss(), apiDevPlugin()],
+    base: '/Smart-Student-Dashboard/',
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
@@ -78,7 +79,3 @@ export default defineConfig(() => {
 });
 
 
-export default defineConfig({
-  plugins: [react()],
-  base: '/Smart-Student-Dashboard/',
-})
