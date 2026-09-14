@@ -64,6 +64,7 @@ function apiDevPlugin() {
 
 export default defineConfig(() => {
   return {
+    base: './',
     plugins: [react(), tailwindcss(), apiDevPlugin()],
     base: '/Smart-Student-Dashboard/',
     resolve: {

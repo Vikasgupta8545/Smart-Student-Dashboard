@@ -19,6 +19,9 @@ import {
   Shield,
   ChevronRight,
   X,
+  CheckSquare,
+  Send,
+  CreditCard,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -34,6 +37,9 @@ export type ActiveTab =
   | 'exams'
   | 'ai-assistant'
   | 'profile'
+  | 'todo'
+  | 'applications'
+  | 'fees'
   | 'student-dashboard'
   | 'student-attendance'
   | 'student-timetable'
@@ -42,6 +48,9 @@ export type ActiveTab =
   | 'student-marks'
   | 'student-assignments'
   | 'student-exams'
+  | 'student-todo'
+  | 'student-applications'
+  | 'student-fees'
   | 'student-ai'
   | 'student-profile'
   // Admin tabs
@@ -55,6 +64,9 @@ export type ActiveTab =
   | 'admin-marks'
   | 'admin-assignments'
   | 'admin-exams'
+  | 'admin-applications'
+  | 'admin-fees'
+  | 'admin-todo'
   | 'admin-announcements'
   | 'admin-reports';
 
@@ -90,15 +102,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
     if (itemId === 'student-marks' && (activeTab === 'marks' || activeTab === 'student-marks')) return true;
     if (itemId === 'student-assignments' && (activeTab === 'assignments' || activeTab === 'student-assignments')) return true;
     if (itemId === 'student-exams' && (activeTab === 'exams' || activeTab === 'student-exams')) return true;
+    if (itemId === 'student-todo' && (activeTab === 'todo' || activeTab === 'student-todo')) return true;
+    if (itemId === 'student-applications' && (activeTab === 'applications' || activeTab === 'student-applications')) return true;
+    if (itemId === 'student-fees' && (activeTab === 'fees' || activeTab === 'student-fees')) return true;
     if (itemId === 'student-ai' && (activeTab === 'ai-assistant' || activeTab === 'student-ai')) return true;
     if (itemId === 'student-profile' && (activeTab === 'profile' || activeTab === 'student-profile')) return true;
     if (itemId === 'admin-dashboard' && (activeTab === 'dashboard' || activeTab === 'admin-dashboard')) return true;
     if (itemId === 'admin-syllabus' && (activeTab === 'syllabus' || activeTab === 'admin-syllabus')) return true;
+    if (itemId === 'admin-applications' && activeTab === 'admin-applications') return true;
+    if (itemId === 'admin-fees' && activeTab === 'admin-fees') return true;
+    if (itemId === 'admin-todo' && activeTab === 'admin-todo') return true;
     return false;
   };
 
   const studentNavItems: Array<{ id: ActiveTab; label: string; icon: React.ElementType; badge?: string }> = [
     { id: 'student-dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'student-todo', label: 'To-Do & Tasks', icon: CheckSquare, badge: 'Tasks' },
+    { id: 'student-applications', label: 'Applications & Leaves', icon: Send, badge: 'Submit' },
+    { id: 'student-fees', label: 'Fees & Payments', icon: CreditCard, badge: 'AKTU' },
     { id: 'student-attendance', label: 'Attendance', icon: CalendarCheck },
     { id: 'student-timetable', label: 'Timetable', icon: Calendar },
     { id: 'student-subjects', label: 'Subjects', icon: BookOpen },
@@ -111,8 +132,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   const adminNavItems: Array<{ id: ActiveTab; label: string; icon: React.ElementType; badge?: string }> = [
-    { id: 'admin-dashboard', label: 'College Overview', icon: LayoutDashboard },
+    { id: 'admin-dashboard', label: 'AKTU Overview', icon: LayoutDashboard },
     { id: 'admin-students', label: 'Manage Students', icon: Users },
+    { id: 'admin-fees', label: 'AKTU Fees Manager', icon: CreditCard, badge: 'Top Colleges' },
+    { id: 'admin-applications', label: 'Leave & Applications', icon: Send, badge: 'Review' },
+    { id: 'admin-todo', label: 'Academic To-Do', icon: CheckSquare },
     { id: 'admin-attendance', label: 'Face Attendance Kiosk', icon: Camera, badge: 'Live AI' },
     { id: 'admin-subjects', label: 'Manage Subjects', icon: BookOpen },
     { id: 'admin-syllabus', label: 'AKTU Syllabus', icon: BookMarked, badge: 'Official' },
@@ -143,17 +167,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
         }`}
       >
         {/* College Crest & Portal Brand */}
-        <div className="flex h-16 items-center justify-between border-b border-slate-100 px-5 dark:border-slate-800/80">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 text-white shadow-md shadow-indigo-500/20">
+        <div className="flex h-16 items-center justify-between border-b border-slate-100 px-4 dark:border-slate-800/80">
+          <div className="flex items-center gap-2.5 overflow-hidden">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 text-white shadow-md shadow-indigo-500/20">
               <GraduationCap className="h-6 w-6" />
             </div>
-            <div>
-              <h1 className="text-sm font-bold tracking-tight text-slate-900 dark:text-white">
-                Apex Institute
+            <div className="min-w-0">
+              <h1 className="text-xs font-bold leading-tight tracking-tight text-slate-900 dark:text-white truncate">
+                Dr. A.P.J. Abdul Kalam Technical University (AKTU)
               </h1>
-              <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
-                Engineering & Tech Portal
+              <p className="text-[10px] font-medium text-indigo-600 dark:text-indigo-400 truncate">
+                Engineering & Tech ERP Portal
               </p>
             </div>
           </div>

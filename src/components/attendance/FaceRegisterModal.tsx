@@ -157,7 +157,7 @@ export const FaceRegisterModal: React.FC<FaceRegisterModalProps> = ({
             <span>Biometric Privacy & Institutional Consent</span>
           </div>
           <p className="mt-1 leading-relaxed text-[11px]">
-            Apex Institute uses client-side mathematical feature vectors (128-d descriptors).
+            Dr. A.P.J. Abdul Kalam Technical University (AKTU) uses client-side mathematical feature vectors (128-d descriptors).
             No raw biometric facial images or video footage are stored or published publicly. Data is strictly
             used for classroom attendance verification in accordance with campus data protection rules.
           </p>

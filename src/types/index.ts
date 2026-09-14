@@ -21,6 +21,7 @@ export interface Student {
   cgpa: number; // 8.74
   sgpa: number; // 8.90
   batch: string; // "2022-2026"
+  academicYear?: string; // "3rd Year" or "2024-2025"
   avatarUrl?: string;
   faceRegistered: boolean;
   faceEmbedding?: number[]; // 128-d biometric descriptor vector
@@ -29,6 +30,8 @@ export interface Student {
   address?: string;
   guardianName?: string;
   guardianPhone?: string;
+  mentor?: string;
+  admissionDate?: string;
 }
 
 export interface SyllabusUnit {
@@ -65,10 +68,12 @@ export interface Subject {
   credits: number; // 4
   facultyName: string;
   facultyEmail: string;
+  facultyId?: string;
   roomNumber: string;
   totalClasses: number;
   syllabusTopics: string[];
   syllabusUnits?: SyllabusUnit[];
+  syllabus?: string[] | any;
   textbooks?: string[];
   referenceBooks?: string[];
 }
@@ -168,6 +173,9 @@ export interface Exam {
   endTime: string; // "01:00 PM"
   roomNumber: string;
   totalMarks: number;
+  maxMarks?: number;
+  durationMinutes?: number;
+  type?: string;
   semester: number;
   syllabus: string[];
 }
@@ -194,4 +202,98 @@ export interface SmartInsight {
   actionText?: string;
   metric?: string;
   relatedSubject?: string;
+}
+
+export interface TodoItem {
+  id: string;
+  title: string;
+  description?: string;
+  category: 'AKTU Exam' | 'Assignment' | 'Lab Record' | 'Project' | 'Fee Clearance' | 'Attendance' | 'Personal' | 'Other';
+  priority: 'high' | 'medium' | 'low';
+  dueDate: string; // YYYY-MM-DD
+  completed: boolean;
+  createdAt: string;
+  completedAt?: string;
+  studentId?: string;
+}
+
+export interface StudentApplication {
+  id: string;
+  studentId: string;
+  studentName: string;
+  rollNumber: string;
+  department: string;
+  semester: number;
+  type: 'Leave Application' | 'Medical Leave' | 'On-Duty (Hackathon/Sports)' | 'Examination Form Correction' | 'Fee Installment Request' | 'Bonafide Certificate' | 'Hostel Night Pass';
+  subject: string;
+  startDate?: string;
+  endDate?: string;
+  totalDays?: number;
+  reason: string;
+  attachmentUrl?: string;
+  emergencyPhone?: string;
+  status: 'Pending' | 'Approved' | 'Rejected';
+  submittedAt: string;
+  reviewedAt?: string;
+  reviewedBy?: string;
+  reviewRemarks?: string;
+}
+
+export interface CollegeFeeStructure {
+  id: string;
+  collegeName: string;
+  collegeCode: string;
+  type: 'Govt Autonomous' | 'Top Private' | 'Govt Aided';
+  location: string;
+  city?: string;
+  academicYear?: string;
+  lastUpdatedBy?: string;
+  lastUpdatedAt?: string;
+  nirfRank?: string;
+  annualTuitionFee: number;
+  developmentFee: number;
+  aktuExamEnrollmentFee: number;
+  labLibraryFee: number;
+  trainingPlacementFee: number;
+  hostelMessFee: number;
+  totalAnnualFee: number;
+  totalWithHostel: number;
+  description: string;
+}
+
+export interface FeePayment {
+  transactionId: string;
+  amount: number;
+  paymentMethod: 'UPI' | 'NetBanking' | 'Debit Card' | 'Credit Card' | 'Demand Draft' | 'Cash';
+  paymentDate: string;
+  status: 'Success' | 'Pending';
+  receiptNumber: string;
+  utrNumber?: string;
+  notes?: string;
+}
+
+export interface StudentFeeRecord {
+  id: string;
+  studentId: string;
+  studentName: string;
+  rollNumber: string;
+  collegeCode: string;
+  collegeName: string;
+  academicYear: string;
+  semester: number;
+  tuitionFee: number;
+  developmentFee: number;
+  examEnrollmentFee: number;
+  labLibraryFee: number;
+  trainingPlacementFee: number;
+  hostelFee: number;
+  scholarshipWaiver: number;
+  scholarshipName?: string;
+  totalPayable: number;
+  paidAmount: number;
+  balanceDue: number;
+  dueDate: string;
+  status: 'Paid' | 'Partial' | 'Due';
+  paymentHistory: FeePayment[];
+  clearanceGranted: boolean;
 }

@@ -91,7 +91,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 <Shield className="h-4 w-4" />
               </span>
               <h1 className="text-xl font-bold tracking-tight sm:text-2xl">
-                Apex Academic Administration
+                Dr. A.P.J. Abdul Kalam Technical University (AKTU) Administration
               </h1>
             </div>
             <p className="mt-1 text-xs text-slate-300">

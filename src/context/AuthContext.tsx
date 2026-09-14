@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [currentStudent, setCurrentStudentState] = useState<Student | null>(INITIAL_STUDENTS[0]);
   const [loading, setLoading] = useState<boolean>(true);
   const [darkMode, setDarkMode] = useState<boolean>(() => {
-    return localStorage.getItem('apex_dark_mode') === 'true';
+    return localStorage.getItem('aktu_dark_mode') === 'true';
   });
 
   const [userProfile, setUserProfile] = useState<UserProfile | null>({
@@ -57,11 +57,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (darkMode) {
       document.documentElement.classList.add('dark');
       document.body.classList.add('dark');
-      localStorage.setItem('apex_dark_mode', 'true');
+      localStorage.setItem('aktu_dark_mode', 'true');
     } else {
       document.documentElement.classList.remove('dark');
       document.body.classList.remove('dark');
-      localStorage.setItem('apex_dark_mode', 'false');
+      localStorage.setItem('aktu_dark_mode', 'false');
     }
   }, [darkMode]);
 
@@ -101,6 +101,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     init();
 
+    const handleStudentsUpdated = (e: any) => {
+      if (e?.detail && Array.isArray(e.detail)) {
+        setStudentsList(e.detail);
+        if (currentStudent) {
+          const found = e.detail.find((s: Student) => s.id === currentStudent.id);
+          if (found) setCurrentStudentState(found);
+          else if (e.detail.length > 0) setCurrentStudentState(e.detail[0]);
+        }
+      }
+    };
+    window.addEventListener('aktu_students_changed', handleStudentsUpdated);
+
     // Listen to Firebase Auth state
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
@@ -119,7 +131,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     });
 
-    return () => unsubscribe();
+    return () => {
+      window.removeEventListener('aktu_students_changed', handleStudentsUpdated);
+      unsubscribe();
+    };
   }, []);
 
   const setRole = (newRole: UserRole) => {
@@ -151,7 +166,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setRoleState('admin');
       setUserProfile({
         uid: 'demo-admin-hod',
-        email: 'hod.cse@apex.edu',
+        email: 'hod.cse@aktu.ac.in',
         displayName: 'Dr. S. Rao (Dean & HOD)',
         role: 'admin',
         photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',

@@ -1,6 +1,6 @@
 {
-  "name": "Smart Campus - AI Student Management System",
-  "description": "AI-powered Student Management System for engineering colleges featuring biometric face recognition attendance, academic performance analytics, timetable tracking, and Gemini AI study assistant.",
+  "name": "Dr. A.P.J. Abdul Kalam Technical University (AKTU) Portal",
+  "description": "Dr. A.P.J. Abdul Kalam Technical University (AKTU) Student & Academic Management System featuring interactive tasks, leave application submission, college fees decider, biometric attendance, and student analytics.",
   "requestFramePermissions": ["camera"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

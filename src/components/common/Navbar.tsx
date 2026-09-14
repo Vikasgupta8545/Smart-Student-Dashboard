@@ -26,6 +26,9 @@ import {
   X,
   ArrowRight,
   Layers,
+  CheckSquare,
+  Send,
+  CreditCard,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { CampusNotification, Subject, Student } from '../../types';
@@ -131,6 +134,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   // Horizontal navbar links
   const studentLinks: Array<{ id: ActiveTab; label: string; icon: React.ElementType }> = [
     { id: 'student-dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'student-todo', label: 'To-Do', icon: CheckSquare },
+    { id: 'student-applications', label: 'Applications', icon: Send },
+    { id: 'student-fees', label: 'Fees', icon: CreditCard },
     { id: 'student-attendance', label: 'Attendance', icon: CalendarCheck },
     { id: 'student-timetable', label: 'Timetable', icon: Calendar },
     { id: 'student-subjects', label: 'Subjects', icon: BookOpen },
@@ -143,6 +149,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   const adminLinks: Array<{ id: ActiveTab; label: string; icon: React.ElementType }> = [
     { id: 'admin-dashboard', label: 'Overview', icon: LayoutDashboard },
     { id: 'admin-students', label: 'Students', icon: Users },
+    { id: 'admin-fees', label: 'AKTU Fees', icon: CreditCard },
+    { id: 'admin-applications', label: 'Applications', icon: Send },
+    { id: 'admin-todo', label: 'To-Do', icon: CheckSquare },
     { id: 'admin-attendance', label: 'Face Kiosk', icon: Camera },
     { id: 'admin-subjects', label: 'Subjects', icon: BookOpen },
     { id: 'admin-syllabus', label: 'Syllabus', icon: BookMarked },

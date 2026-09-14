@@ -20,6 +20,10 @@ import { StudentAssignmentsView } from './components/student/StudentAssignmentsV
 import { StudentExamsView } from './components/student/StudentExamsView';
 import { StudentProfileView } from './components/student/StudentProfileView';
 import { SubjectSyllabusView } from './components/syllabus/SubjectSyllabusView';
+import { TodoView } from './components/todo/TodoView';
+import { StudentApplicationsView } from './components/applications/StudentApplicationsView';
+import { AdminApplicationsView } from './components/admin/AdminApplicationsView';
+import { FeesView } from './components/fees/FeesView';
 
 // Admin View Modules
 import { AdminDashboardView } from './components/admin/AdminDashboardView';
@@ -219,6 +223,7 @@ const AppContent: React.FC = () => {
             <FaceAttendanceKiosk
               students={studentsList}
               subjects={subjects}
+              timetable={timetable}
               onAttendanceMarked={loadAllData}
             />
           );
@@ -266,6 +271,15 @@ const AppContent: React.FC = () => {
               onRefresh={loadAllData}
             />
           );
+        case 'todo':
+        case 'admin-todo':
+          return <TodoView />;
+        case 'applications':
+        case 'admin-applications':
+          return <AdminApplicationsView />;
+        case 'fees':
+        case 'admin-fees':
+          return <FeesView />;
         case 'admin-reports':
           return (
             <AdminReportsView
@@ -365,6 +379,15 @@ const AppContent: React.FC = () => {
       case 'exams':
       case 'student-exams':
         return <StudentExamsView exams={exams} />;
+      case 'todo':
+      case 'student-todo':
+        return <TodoView />;
+      case 'applications':
+      case 'student-applications':
+        return <StudentApplicationsView />;
+      case 'fees':
+      case 'student-fees':
+        return <FeesView />;
       case 'profile':
       case 'student-profile':
         return (
@@ -499,7 +522,7 @@ const AppContent: React.FC = () => {
           isOpen={!!faceRegisterStudent}
           onClose={() => setFaceRegisterStudent(null)}
           student={faceRegisterStudent}
-          onRegistrationSuccess={() => {
+          onRegistered={() => {
             setFaceRegisterStudent(null);
             refreshStudents();
             loadAllData();
