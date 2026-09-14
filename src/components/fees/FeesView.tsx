@@ -26,11 +26,20 @@ import {
   recordFeePayment,
   getStudents,
 } from '../../services/studentService';
+import { INITIAL_COLLEGE_FEES } from '../../data/aktuFeesAndTasksData';
 import { useAuth } from '../../context/AuthContext';
 
 export const FeesView: React.FC = () => {
   const { currentStudent, role } = useAuth();
-  const [colleges, setColleges] = useState<CollegeFeeStructure[]>([]);
+  const [colleges, setColleges] = useState<CollegeFeeStructure[]>(() => {
+    try {
+      const stored = getCollegeFeeStructures();
+      if (stored && stored.length > 0) return stored;
+    } catch {
+      // fallback
+    }
+    return INITIAL_COLLEGE_FEES;
+  });
   const [activeCollegeId, setActiveCollegeId] = useState('iet-lucknow');
   const [studentFeeRecord, setStudentFeeRecord] = useState<StudentFeeRecord | null>(null);
   const [allStudents, setAllStudents] = useState<Student[]>([]);
@@ -94,7 +103,11 @@ export const FeesView: React.FC = () => {
   }, [currentStudent?.id, activeCollegeId, selectedStudentId]);
 
   const activeCollege = useMemo(() => {
-    return colleges.find((c) => c.id === activeCollegeId) || colleges[0];
+    return (
+      colleges.find((c) => c.id === activeCollegeId) ||
+      colleges[0] ||
+      INITIAL_COLLEGE_FEES[0]
+    );
   }, [colleges, activeCollegeId]);
 
   const handleStudentSelect = (sId: string) => {
@@ -295,14 +308,16 @@ export const FeesView: React.FC = () => {
           <div className="flex items-start justify-between">
             <div>
               <span className="rounded-md bg-indigo-50 px-2 py-0.5 text-[10px] font-mono font-bold text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300">
-                AKTU Code: {activeCollege.collegeCode}
+                AKTU Code: {activeCollege?.collegeCode || 'AKTU-052'}
               </span>
               <h3 className="text-base font-bold text-slate-900 dark:text-white mt-1">
-                {activeCollege.collegeName}
+                {activeCollege?.collegeName || 'AKTU Affiliated College'}
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">{activeCollege.city}, Uttar Pradesh</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                {activeCollege?.city || 'Uttar Pradesh'}, Uttar Pradesh
+              </p>
             </div>
-            {role === 'admin' && (
+            {role === 'admin' && activeCollege && (
               <button
                 onClick={() => setEditingCollege(activeCollege)}
                 className="p-1.5 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-100 dark:bg-indigo-950/50 dark:text-indigo-300"
@@ -317,43 +332,43 @@ export const FeesView: React.FC = () => {
             <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>Annual Tuition Fee</span>
               <span className="font-semibold text-slate-900 dark:text-white">
-                ₹{activeCollege.annualTuitionFee.toLocaleString('en-IN')}
+                ₹{(activeCollege?.annualTuitionFee || 0).toLocaleString('en-IN')}
               </span>
             </div>
             <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>University Development Fee</span>
               <span className="font-semibold text-slate-900 dark:text-white">
-                ₹{activeCollege.developmentFee.toLocaleString('en-IN')}
+                ₹{(activeCollege?.developmentFee || 0).toLocaleString('en-IN')}
               </span>
             </div>
             <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>AKTU Exam & Enrollment Fee</span>
               <span className="font-semibold text-slate-900 dark:text-white">
-                ₹{activeCollege.aktuExamEnrollmentFee.toLocaleString('en-IN')}
+                ₹{(activeCollege?.aktuExamEnrollmentFee || 0).toLocaleString('en-IN')}
               </span>
             </div>
             <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>Lab, Library & Digital Portal</span>
               <span className="font-semibold text-slate-900 dark:text-white">
-                ₹{activeCollege.labLibraryFee.toLocaleString('en-IN')}
+                ₹{(activeCollege?.labLibraryFee || 0).toLocaleString('en-IN')}
               </span>
             </div>
             <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>Training & Placement (CDC)</span>
               <span className="font-semibold text-slate-900 dark:text-white">
-                ₹{activeCollege.trainingPlacementFee.toLocaleString('en-IN')}
+                ₹{(activeCollege?.trainingPlacementFee || 0).toLocaleString('en-IN')}
               </span>
             </div>
             <div className="border-t border-slate-200 dark:border-slate-700 pt-2 flex justify-between font-bold text-slate-900 dark:text-white text-sm">
               <span>Total Annual Package</span>
               <span className="text-indigo-600 dark:text-indigo-400 font-mono">
-                ₹{activeCollege.totalAnnualFee.toLocaleString('en-IN')}
+                ₹{(activeCollege?.totalAnnualFee || 0).toLocaleString('en-IN')}
               </span>
             </div>
           </div>
 
           <p className="text-[10px] text-slate-400">
-            Regulated under AKTU Fee Fixation Committee Ordinance. Revised for {activeCollege.academicYear}.
+            Regulated under AKTU Fee Fixation Committee Ordinance. Revised for {activeCollege?.academicYear || '2025 - 2026'}.
           </p>
         </div>
 

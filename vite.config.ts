@@ -62,11 +62,15 @@ function apiDevPlugin() {
   };
 }
 
-export default defineConfig(() => {
+export default defineConfig(({ command }) => {
+  // In development server (AI Studio dev environment & local), base MUST be '/' for reverse proxy routing.
+  // In production build for GitHub Pages, use '/Smart-Student-Dashboard/' (or process.env.VITE_BASE).
+  const isDev = command === 'serve';
+  const base = isDev ? '/' : (process.env.VITE_BASE || '/Smart-Student-Dashboard/');
+
   return {
-    base: './',
+    base,
     plugins: [react(), tailwindcss(), apiDevPlugin()],
-    base: '/Smart-Student-Dashboard/',
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
